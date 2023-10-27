@@ -1,0 +1,96 @@
+/**
+ * MageINIC
+ * Copyright (C) 2023 MageINIC <support@mageinic.com>
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see https://opensource.org/licenses/gpl-3.0.html.
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category MageINIC
+ * @package MageINIC_CustomerProfile
+ * @copyright Copyright (c) 2023 MageINIC (https://www.mageinic.com/)
+ * @license https://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+ * @author MageINIC <support@mageinic.com>
+ */
+
+.review-item .review-image {
+    width: 70px;
+    padding: 0px 10px 5px 0px;
+    float: left;
+}
+.review-item .review-image img {
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+}
+.review-item .review-infor {
+    display: inline-block;
+}
+.review-item .review-infor .review-title {
+    padding: 0px;
+    margin: 0px;
+    line-height: inherit;
+    padding-bottom: 0px;
+}
+.review-item .review-infor .review-details {
+    color: gray;
+    padding-bottom: 10px;
+    font-size: 13px;
+}
+.review-item .review-infor .review-details .review-ratings {
+    float: inherit;
+    padding-bottom: 5px;
+    margin: 0px;
+}
+.review-item .review-infor .review-details .review-ratings .rating-label {
+    display: none;
+}
+.review-item .review-content {
+    margin-bottom: 20px;
+    float: left;
+    width: 100%;
+}
+.review-item .review-image .nick-name{
+    width: 70px;
+    height: 70px;
+    background: #000;
+    display: inline-block;
+    border-radius: 100%;
+    font-size: 36px;
+    font-weight: bold;
+    color: #fff;
+    line-height: 1;
+    margin: 0;
+    padding: 20px 0;
+    box-sizing: border-box;
+    text-align: center;
+}
+@media(max-width: 767px) {
+    .review-item .review-image {
+        width: 60px;
+        padding: 0px 10px 5px 0px;
+        float: left;
+    }
+    .review-item .review-image img {
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+    }
+    .review-item .review-infor .review-title {
+        font-size: 13px;
+    }
+    .review-item .review-infor .review-details {
+        color: gray;
+        padding-bottom: 10px;
+        font-size: 12px;
+    }
+}

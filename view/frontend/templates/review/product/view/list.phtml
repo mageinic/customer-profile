@@ -1,0 +1,139 @@
+<?php
+/**
+ * MageINIC
+ * Copyright (C) 2023 MageINIC <support@mageinic.com>
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see https://opensource.org/licenses/gpl-3.0.html.
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category MageINIC
+ * @package MageINIC_CustomerProfile
+ * @copyright Copyright (c) 2023 MageINIC (https://www.mageinic.com/)
+ * @license https://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+ * @author MageINIC <support@mageinic.com>
+ */
+
+use Magento\Framework\Escaper;
+use Magento\Review\Block\Product\View\ListView;
+
+/**
+ * @var ListView $block
+ * @var Escaper $escaper
+ */
+
+$viewModel = $block->getViewModel();
+$helper = $viewModel->getCustomerProfileHelper();
+$_items = $block->getReviewsCollection()->getItems();
+$format = $block->getDateFormat() ?: IntlDateFormatter::SHORT;
+?>
+<?php if (count($_items)): ?>
+    <div class="block review-list" id="customer-reviews">
+        <div class="block-title">
+            <strong><?= $escaper->escapeHtml(__('Customers Reviews')) ?></strong>
+        </div>
+        <div class="block-content">
+            <div class="toolbar review-toolbar">
+                <?= $block->getChildHtml('toolbar') ?>
+            </div>
+            <ol class="items review-items">
+                <?php foreach ($_items as $_review): ?>
+                    <li class="item review-item" itemscope itemprop="review" itemtype="http://schema.org/Review">
+                        <?php if ($helper->getEnablePicture() && $helper->getEnableModule()): ?>
+                            <?php $name = $_review->getNickname();
+                            $firstCharacter = substr($name, 0, 1); ?>
+                            <?php if ($_review->getData('customer_id')): ?>
+                                <?php $image = $viewModel->getCustomerProfileImageById(
+                                    $_review->getData('customer_id')
+                                ) ?>
+                                <?php if (empty($image)): ?>
+                                    <div class="review-image">
+                                        <span class="nick-name">
+                                            <?= $escaper->escapeHtml(__($firstCharacter)) ?>
+                                        </span>
+                                    </div>
+                                <?php else: ?>
+                                    <div class="review-image">
+                                        <img src="<?= $escaper->escapeHtmlAttr($image) ?>"
+                                             width="150px" height="150px" alt="avatar"/>
+                                    </div>
+                                <?php endif; ?>
+                            <?php else: ?>
+                                <div class="review-image">
+                                    <span class="nick-name">
+                                        <?= $escaper->escapeHtml(__($firstCharacter)) ?>
+                                    </span>
+                                </div>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                        <div class="review-infor">
+                            <div class="review-title" itemprop="name">
+                                <?= $escaper->escapeHtml($_review->getTitle()) ?>
+                            </div>
+                            <div class="review-details">
+                                <?php if (count($_review->getRatingVotes())): ?>
+                                    <div class="review-ratings">
+                                        <?php foreach ($_review->getRatingVotes() as $_vote): ?>
+                                            <div class="rating-summary item" itemprop="reviewRating" itemscope
+                                                 itemtype="http://schema.org/Rating">
+                                                <span class="label rating-label">
+                                                    <span>
+                                                        <?= $escaper->escapeHtml($_vote->getRatingCode()) ?>
+                                                    </span>
+                                                </span>
+                                                <div class="rating-result"
+                                                     title="<?= $escaper->escapeHtmlAttr($_vote->getPercent()) ?>%">
+                                                    <meta itemprop="worstRating" content="1"/>
+                                                    <meta itemprop="bestRating" content="100"/>
+                                                    <span style="width:
+                                                    <?= $escaper->escapeHtmlAttr($_vote->getPercent()) ?>%">
+                                                        <span itemprop="ratingValue">
+                                                            <?= $escaper->escapeHtml($_vote->getPercent()) ?>%
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
+                                <?php endif; ?>
+                                <p class="review-author">
+                                    <span class="review-details-label">
+                                        <?= $escaper->escapeHtml(__('Review by')) ?>
+                                    </span>
+                                    <strong class="review-details-value"
+                                            itemprop="author"><?= $escaper->escapeHtml($_review->getNickname()) ?>
+                                    </strong>
+                                </p>
+                                <p class="review-date">
+                                    <span class="review-details-label">
+                                        <?= $escaper->escapeHtml(__('Posted on')) ?>
+                                    </span>
+                                    <?php $createdAt = $block->formatDate($_review->getCreatedAt(), $format) ?>
+                                    <time class="review-details-value" itemprop="datePublished"
+                                          datetime="<?= $escaper->escapeHtmlAttr($createdAt) ?>">
+                                        <?= $escaper->escapeHtml($createdAt) ?>
+                                    </time>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="review-content" itemprop="description">
+                            <?= $escaper->escapeHtml(nl2br($_review->getDetail())) ?>
+                        </div>
+                    </li>
+                <?php endforeach; ?>
+            </ol>
+            <div class="toolbar review-toolbar">
+                <?= $block->getChildHtml('toolbar') ?>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>

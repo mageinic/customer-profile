@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * MageINIC
+ * Copyright (C) 2023 MageINIC <support@mageinic.com>
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see https://opensource.org/licenses/gpl-3.0.html.
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category MageINIC
+ * @package MageINIC_CustomerProfile
+ * @copyright Copyright (c) 2023 MageINIC (https://www.mageinic.com/)
+ * @license https://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+ * @author MageINIC <support@mageinic.com>
+ */
+ -->
+
+<layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/layout_generic.xsd">
+    <container name="root">
+        <block class="Magento\Review\Block\Product\View\ListView" name="product.info.product_additional_data"
+               as="product_additional_data" template="MageINIC_CustomerProfile::review/product/view/list.phtml">
+            <arguments>
+                <argument name="view_model" xsi:type="object">MageINIC\CustomerProfile\ViewModel\Profile</argument>
+            </arguments>
+            <block class="Magento\Theme\Block\Html\Pager" name="product_review_list.toolbar">
+                <arguments>
+                    <argument name="show_per_page" xsi:type="boolean">false</argument>
+                    <argument name="show_amounts" xsi:type="boolean">false</argument>
+                </arguments>
+            </block>
+        </block>
+    </container>
+</layout>

@@ -1,0 +1,83 @@
+<?php
+/**
+ * MageINIC
+ * Copyright (C) 2023 MageINIC <support@mageinic.com>
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see https://opensource.org/licenses/gpl-3.0.html.
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category MageINIC
+ * @package MageINIC_CustomerProfile
+ * @copyright Copyright (c) 2023 MageINIC (https://www.mageinic.com/)
+ * @license https://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+ * @author MageINIC <support@mageinic.com>
+ */
+
+use Magento\Customer\Block\Form\Register;
+use Magento\Framework\Escaper;
+
+/**
+ * @var Register $block
+ * @var Escaper $escaper
+ */
+?>
+
+<fieldset class="fieldset create account">
+    <legend class="legend">
+        <span><?= $escaper->escapeHtml(__('Additional Information')) ?></span>
+    </legend>
+    <div class="field my_customer_image">
+        <label for="my_customer_image" class="label">
+            <span><?= $escaper->escapeHtml(__('Profile Picture')) ?></span>
+        </label>
+        <div class="control">
+            <div class="close" style="display: none;">X</div>
+            <img src="<?= $escaper->escapeUrl($block->getViewFileUrl(
+                'MageINIC_CustomerProfile::images/no-profile-photo.jpg'
+            )) ?>"
+                 width="150px" height="150px" alt="profile-picture" title="Upload Profile Image"
+                 id="profile-image"
+                 class="profile-image">
+            <br/>
+            <input type="file" name="profile_picture" id="profile_picture"
+                   title="<?= $escaper->escapeHtmlAttr(__('Profile Picture')) ?>"
+                   accept="image/jpeg, image/png, image/jpg"
+                   class="input-text" data-validate="{required:false}">
+        </div>
+    </div>
+</fieldset>
+<script>
+    require(['jquery'], function ($) {
+        $('#profile_picture').on('change', function () {
+            previewImage(this);
+        });
+        function previewImage(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                var defaultImage = "<?= $escaper->escapeJs($block->getViewFileUrl(
+                    'MageINIC_CustomerProfile::images/no-profile-photo.jpg'
+                )) ?>";
+                reader.onload = function (e) {
+                    $('#profile-image').attr('src', e.target.result);
+                    $('.close').show();
+                    $('.close').click(function () {
+                        $('#profile-image').attr('src', defaultImage);
+                        $('.close').hide();
+                        $('#profile_picture').val('');
+                    })
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    });
+</script>
