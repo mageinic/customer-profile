@@ -1,5 +1,5 @@
 {
-    "name": "mageinic/customerprofile",
+    "name": "mageinic/customer-profile",
     "description": "Customer Profile by MageINIC, Customer Profile extension empowers users to personalize their profiles by adding, updating, and deleting avatars. This enhances the overall user experience and personalization on your store by displaying avatars in key sections such as the website header and reviews, creating a more engaging and credible environment for users.",
     "require": {
         "php": "^8.0",
